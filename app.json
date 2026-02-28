@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "KOAH Egzersiz",
+    "slug": "koah-egzersiz",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#E74C4C"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.koahegzersiz.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#E74C4C"
+      },
+      "package": "com.koahegzersiz.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
