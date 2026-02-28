@@ -20,8 +20,11 @@ const menuItems = [
 
 export default function AnasayfaScreen({ navigation }) {
   const handlePress = (screen) => {
-    // Sayfalar eklendikçe navigation aktif edilecek
-    // navigation.navigate(screen);
+    try {
+      navigation.navigate(screen);
+    } catch (e) {
+      // Sayfa henüz eklenmemiş
+    }
   };
 
   return (
