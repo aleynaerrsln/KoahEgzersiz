@@ -9,108 +9,142 @@ import {
 } from 'react-native';
 import colors from '../constants/colors';
 
-const egzersizler = [
-  { id: 1, tarih: '16.11.2020 Pazartesi', ad: 'SOL KOL Egzersizi', tamamlandi: true },
-  { id: 2, tarih: '16.11.2020 Pazartesi', ad: 'SAĞ KOL Egzersizi', tamamlandi: true },
-  { id: 3, tarih: '16.11.2020 Pazartesi', ad: 'KOLLARI ÖNE KALDIRIYORUZ Egzersizi', tamamlandi: true },
-  { id: 4, tarih: '16.11.2020 Pazartesi', ad: 'ISINMA HAREKETLERİ Egzersizi', tamamlandi: true },
-  { id: 5, tarih: '17.11.2020 Salı', ad: 'NEFES EGZERSİZİ', tamamlandi: true },
-  { id: 6, tarih: '17.11.2020 Salı', ad: 'BÜZÜK DUDAK SOLUNUMU Egzersizi', tamamlandi: true },
-  { id: 7, tarih: '18.11.2020 Çarşamba', ad: 'BACAK EGZERSİZİ', tamamlandi: false },
-  { id: 8, tarih: '18.11.2020 Çarşamba', ad: 'OTURARAK YÜRÜYÜŞ Egzersizi', tamamlandi: false },
+const varsayilanEgzersizler = [
+  { id: 1, ad: 'Sol Kol Egzersizi', aciklama: 'Kolu yana doğru 10 kez kaldırın', sure: '5 dk', tamamlandi: false },
+  { id: 2, ad: 'Sağ Kol Egzersizi', aciklama: 'Kolu yana doğru 10 kez kaldırın', sure: '5 dk', tamamlandi: false },
+  { id: 3, ad: 'Kolları Öne Kaldırma', aciklama: 'Her iki kolu birlikte öne kaldırın', sure: '5 dk', tamamlandi: false },
+  { id: 4, ad: 'Isınma Hareketleri', aciklama: 'Hafif tempo yerinde yürüyüş', sure: '10 dk', tamamlandi: false },
+  { id: 5, ad: 'Nefes Egzersizi', aciklama: 'Derin nefes al-ver tekrarları', sure: '8 dk', tamamlandi: false },
+  { id: 6, ad: 'Büzük Dudak Solunumu', aciklama: 'Burundan al, büzük dudakla ver', sure: '5 dk', tamamlandi: false },
+  { id: 7, ad: 'Bacak Egzersizi', aciklama: 'Oturarak bacak kaldırma', sure: '8 dk', tamamlandi: false },
+  { id: 8, ad: 'Oturarak Yürüyüş', aciklama: 'Sandalyede oturarak adım atma', sure: '10 dk', tamamlandi: false },
 ];
 
 export default function EgitimlerScreen({ navigation }) {
   const [arama, setArama] = useState('');
+  const [egzersizler, setEgzersizler] = useState(varsayilanEgzersizler);
+  const [seciliTab, setSeciliTab] = useState('tumu');
+
+  const toggleTamamla = (id) => {
+    setEgzersizler(egzersizler.map((e) =>
+      e.id === id ? { ...e, tamamlandi: !e.tamamlandi } : e
+    ));
+  };
+
+  const tumunuSifirla = () => {
+    setEgzersizler(egzersizler.map((e) => ({ ...e, tamamlandi: false })));
+  };
 
   const filtrelenmis = egzersizler.filter((e) =>
-    e.ad.toLowerCase().includes(arama.toLowerCase()) ||
-    e.tarih.toLowerCase().includes(arama.toLowerCase())
+    e.ad.toLowerCase().includes(arama.toLowerCase())
   );
 
   const tamamlananlar = filtrelenmis.filter((e) => e.tamamlandi);
-  const tamamlanmayanlar = filtrelenmis.filter((e) => !e.tamamlandi);
+  const bekleyenler = filtrelenmis.filter((e) => !e.tamamlandi);
+  const tamamYuzde = Math.round((tamamlananlar.length / egzersizler.length) * 100);
+
+  const gosterilecek =
+    seciliTab === 'tamamlanan' ? tamamlananlar :
+    seciliTab === 'bekleyen' ? bekleyenler : filtrelenmis;
 
   return (
     <View style={styles.container}>
-      {/* Üst Yeşil Header */}
+      {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>
-          <Text style={styles.headerRed}>KOAH </Text>
-          <Text style={styles.headerGreen}>EGZERSİZ</Text>
-        </Text>
-      </View>
-
-      {/* İkon Bar */}
-      <View style={styles.iconBar}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.iconText}>☰</Text>
+        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
+          <Text style={styles.backIcon}>{'<'}</Text>
         </TouchableOpacity>
-        <View style={styles.iconRight}>
-          <Text style={styles.iconText}>✉️</Text>
-          <Text style={styles.iconText}>🔔</Text>
-          <Text style={styles.iconText}>👤</Text>
-          <Text style={styles.iconText}>⚙️</Text>
-        </View>
+        <Text style={styles.headerTitle}>KOAH Egzersiz</Text>
+        <View style={{ width: 36 }} />
       </View>
 
-      <ScrollView style={styles.scrollArea} contentContainerStyle={styles.content}>
-        {/* Başlık */}
-        <Text style={styles.pageTitle}>İçerik Listesi</Text>
-
-        {/* Breadcrumb */}
-        <View style={styles.breadcrumbBar}>
-          <Text style={styles.breadcrumbIcon}>🏠</Text>
-          <Text style={styles.breadcrumbText}> Kontrol Panelim  →  İçerik Listesi</Text>
+      {/* İlerleme kartı */}
+      <View style={styles.ilerlemeCard}>
+        <View style={styles.ilerlemeUst}>
+          <View>
+            <Text style={styles.ilerlemeBuyuk}>{tamamlananlar.length}/{egzersizler.length}</Text>
+            <Text style={styles.ilerlemeKucuk}>egzersiz tamamlandı</Text>
+          </View>
+          <View style={styles.yuzdeContainer}>
+            <Text style={styles.yuzdeText}>%{tamamYuzde}</Text>
+          </View>
         </View>
-
-        <View style={styles.divider} />
-
-        <Text style={styles.subTitle}>İçerik Listesi</Text>
-
-        {/* Arama */}
-        <View style={styles.aramaRow}>
-          <Text style={styles.aramaLabel}>Ara:</Text>
-          <TextInput
-            style={styles.aramaInput}
-            value={arama}
-            onChangeText={setArama}
-            placeholder=""
-          />
+        <View style={styles.ilerlemeBarBg}>
+          <View style={[styles.ilerlemeBarFill, { width: `${tamamYuzde}%` }]} />
         </View>
-
-        {/* Tamamlanan Egzersizler */}
         {tamamlananlar.length > 0 && (
-          <>
-            <Text style={styles.sectionTitle}>Tamamlanan Egzersizler</Text>
-            {tamamlananlar.map((egzersiz) => (
-              <View key={egzersiz.id} style={styles.egzersizItem}>
-                <Text style={styles.checkIcon}>✅</Text>
-                <Text style={styles.egzersizText}>
-                  {egzersiz.tarih} - {egzersiz.ad} Tamamlandı.
-                </Text>
-              </View>
-            ))}
-          </>
+          <TouchableOpacity style={styles.sifirlaBtn} onPress={tumunuSifirla}>
+            <Text style={styles.sifirlaBtnText}>Tümünü Sıfırla</Text>
+          </TouchableOpacity>
         )}
+      </View>
 
-        {/* Bekleyen Egzersizler */}
-        {tamamlanmayanlar.length > 0 && (
-          <>
-            <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Bekleyen Egzersizler</Text>
-            {tamamlanmayanlar.map((egzersiz) => (
-              <View key={egzersiz.id} style={styles.egzersizItem}>
-                <Text style={styles.pendingIcon}>⏳</Text>
-                <Text style={styles.egzersizText}>
-                  {egzersiz.tarih} - {egzersiz.ad}
-                </Text>
+      {/* Arama */}
+      <View style={styles.aramaContainer}>
+        <Text style={styles.aramaIcon}>🔍</Text>
+        <TextInput
+          style={styles.aramaInput}
+          value={arama}
+          onChangeText={setArama}
+          placeholder="Egzersiz ara..."
+          placeholderTextColor={colors.gray}
+        />
+      </View>
+
+      {/* Tab bar */}
+      <View style={styles.tabBar}>
+        {[
+          { key: 'tumu', label: 'Tümü', count: filtrelenmis.length },
+          { key: 'bekleyen', label: 'Bekleyen', count: bekleyenler.length },
+          { key: 'tamamlanan', label: 'Bitti', count: tamamlananlar.length },
+        ].map((tab) => (
+          <TouchableOpacity
+            key={tab.key}
+            style={[styles.tab, seciliTab === tab.key && styles.tabActive]}
+            onPress={() => setSeciliTab(tab.key)}
+          >
+            <Text style={[styles.tabText, seciliTab === tab.key && styles.tabTextActive]}>
+              {tab.label} ({tab.count})
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* Liste */}
+      <ScrollView style={styles.list} contentContainerStyle={styles.listContent}>
+        {gosterilecek.length === 0 ? (
+          <View style={styles.bosContainer}>
+            <Text style={styles.bosEmoji}>{seciliTab === 'tamamlanan' ? '🎯' : '✨'}</Text>
+            <Text style={styles.bosText}>
+              {seciliTab === 'tamamlanan'
+                ? 'Henüz tamamlanan egzersiz yok'
+                : seciliTab === 'bekleyen'
+                ? 'Tüm egzersizler tamamlandı!'
+                : 'Sonuç bulunamadı'}
+            </Text>
+          </View>
+        ) : (
+          gosterilecek.map((egzersiz) => (
+            <TouchableOpacity
+              key={egzersiz.id}
+              style={[styles.egzersizCard, egzersiz.tamamlandi && styles.egzersizCardDone]}
+              onPress={() => toggleTamamla(egzersiz.id)}
+              activeOpacity={0.7}
+            >
+              <View style={[styles.checkBox, egzersiz.tamamlandi && styles.checkBoxDone]}>
+                {egzersiz.tamamlandi && <Text style={styles.checkMark}>✓</Text>}
               </View>
-            ))}
-          </>
-        )}
-
-        {filtrelenmis.length === 0 && (
-          <Text style={styles.bosText}>Sonuç bulunamadı.</Text>
+              <View style={styles.egzersizInfo}>
+                <Text style={[styles.egzersizAd, egzersiz.tamamlandi && styles.egzersizAdDone]}>
+                  {egzersiz.ad}
+                </Text>
+                <Text style={styles.egzersizAciklama}>{egzersiz.aciklama}</Text>
+              </View>
+              <View style={styles.sureBadge}>
+                <Text style={styles.sureText}>{egzersiz.sure}</Text>
+              </View>
+            </TouchableOpacity>
+          ))
         )}
       </ScrollView>
     </View>
@@ -120,134 +154,225 @@ export default function EgitimlerScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
+    backgroundColor: colors.primary,
   },
+  // Header
   header: {
-    backgroundColor: '#FFFFFF',
-    paddingTop: 50,
-    paddingBottom: 10,
+    flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: '#4CAF50',
+    justifyContent: 'space-between',
+    paddingTop: 50,
+    paddingBottom: 14,
+    paddingHorizontal: 16,
   },
-  headerTitle: {
-    fontSize: 22,
+  backBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backIcon: {
+    color: colors.white,
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  headerRed: {
-    color: '#E74C3C',
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.white,
   },
-  headerGreen: {
-    color: '#333',
+  // İlerleme kartı
+  ilerlemeCard: {
+    marginHorizontal: 16,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 14,
+    padding: 16,
+    marginBottom: 14,
   },
-  iconBar: {
+  ilerlemeUst: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    backgroundColor: '#4CAF50',
+    marginBottom: 10,
   },
-  iconRight: {
-    flexDirection: 'row',
-    gap: 16,
-  },
-  iconText: {
-    fontSize: 18,
-    color: colors.white,
-  },
-  scrollArea: {
-    flex: 1,
-  },
-  content: {
-    padding: 16,
-    paddingBottom: 30,
-  },
-  pageTitle: {
+  ilerlemeBuyuk: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 8,
+    color: colors.white,
   },
-  breadcrumbBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    padding: 10,
-    borderRadius: 4,
-    marginBottom: 12,
-  },
-  breadcrumbIcon: {
-    fontSize: 14,
-  },
-  breadcrumbText: {
+  ilerlemeKucuk: {
     fontSize: 12,
-    color: colors.gray,
+    color: 'rgba(255,255,255,0.6)',
+    marginTop: 2,
   },
-  divider: {
-    height: 1,
-    backgroundColor: '#E0E0E0',
-    marginBottom: 12,
+  yuzdeContainer: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.3)',
   },
-  subTitle: {
-    fontSize: 18,
-    color: colors.text,
-    marginBottom: 14,
+  yuzdeText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.white,
   },
-  aramaRow: {
+  ilerlemeBarBg: {
+    height: 8,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  ilerlemeBarFill: {
+    height: '100%',
+    backgroundColor: '#27AE60',
+    borderRadius: 4,
+  },
+  sifirlaBtn: {
+    alignSelf: 'flex-end',
+    marginTop: 10,
+  },
+  sifirlaBtnText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 12,
+    textDecorationLine: 'underline',
+  },
+  // Arama
+  aramaContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginHorizontal: 16,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginBottom: 12,
   },
-  aramaLabel: {
-    fontSize: 15,
-    color: colors.text,
-    marginRight: 10,
+  aramaIcon: {
+    fontSize: 16,
+    marginRight: 8,
   },
   aramaInput: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#CCC',
-    borderRadius: 4,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    fontSize: 14,
+    fontSize: 15,
+    color: colors.white,
+    paddingVertical: 12,
+  },
+  // Tab bar
+  tabBar: {
+    flexDirection: 'row',
+    marginHorizontal: 16,
+    marginBottom: 12,
+    gap: 8,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    alignItems: 'center',
+  },
+  tabActive: {
     backgroundColor: colors.white,
   },
-  sectionTitle: {
-    fontSize: 16,
+  tabText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.6)',
+  },
+  tabTextActive: {
+    color: colors.primary,
+  },
+  // Liste
+  list: {
+    flex: 1,
+    backgroundColor: colors.white,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+  },
+  listContent: {
+    padding: 16,
+    paddingBottom: 30,
+  },
+  // Egzersiz kartı
+  egzersizCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FAFAFA',
+    borderRadius: 12,
+    padding: 14,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#F0F0F0',
+  },
+  egzersizCardDone: {
+    backgroundColor: '#F0FFF0',
+    borderColor: '#C8E6C9',
+  },
+  checkBox: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderColor: colors.gray,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  checkBoxDone: {
+    backgroundColor: '#27AE60',
+    borderColor: '#27AE60',
+  },
+  checkMark: {
+    color: colors.white,
+    fontSize: 14,
     fontWeight: 'bold',
+  },
+  egzersizInfo: {
+    flex: 1,
+  },
+  egzersizAd: {
+    fontSize: 15,
+    fontWeight: '600',
     color: colors.text,
+    marginBottom: 3,
+  },
+  egzersizAdDone: {
+    textDecorationLine: 'line-through',
+    color: colors.gray,
+  },
+  egzersizAciklama: {
+    fontSize: 12,
+    color: colors.textLight,
+  },
+  sureBadge: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 8,
+    marginLeft: 8,
+  },
+  sureText: {
+    color: colors.white,
+    fontSize: 11,
+    fontWeight: '600',
+  },
+  // Boş durum
+  bosContainer: {
+    alignItems: 'center',
+    paddingTop: 40,
+  },
+  bosEmoji: {
+    fontSize: 40,
     marginBottom: 12,
   },
-  egzersizItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 10,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-  },
-  checkIcon: {
-    fontSize: 16,
-    marginRight: 8,
-    marginTop: 2,
-  },
-  pendingIcon: {
-    fontSize: 16,
-    marginRight: 8,
-    marginTop: 2,
-  },
-  egzersizText: {
-    fontSize: 14,
-    color: '#2E7D32',
-    flex: 1,
-    lineHeight: 20,
-  },
   bosText: {
+    fontSize: 15,
     color: colors.gray,
     textAlign: 'center',
-    marginTop: 30,
-    fontSize: 15,
   },
 });

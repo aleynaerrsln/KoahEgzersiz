@@ -11,38 +11,43 @@ import colors from '../constants/colors';
 const sorular = [
   {
     id: 1,
-    soru: 'KOAH nedir?',
-    cevap: 'KOAH (Kronik Obstrüktif Akciğer Hastalığı), akciğerlerdeki hava yollarının daralması ve akciğer dokusunun hasar görmesi sonucu oluşan kronik bir solunum yolu hastalığıdır. Nefes darlığı, kronik öksürük ve balgam en sık görülen belirtileridir.',
+    soru: 'Gebelikte kan şekeri takibi neden önemlidir?',
+    cevap: 'Gebelik diyabeti (gestasyonel diyabet) anne ve bebek sağlığını ciddi şekilde etkileyebilir. Düzenli kan şekeri takibi, olası komplikasyonları erken tespit etmenizi sağlar. Açlık kan şekeri 95 mg/dL altında, tokluk kan şekeri ise 1. saat 140, 2. saat 120 mg/dL altında olmalıdır.',
   },
   {
     id: 2,
-    soru: 'KOAH egzersizleri ne işe yarar?',
-    cevap: 'KOAH egzersizleri solunum kaslarını güçlendirir, nefes darlığını azaltır, fiziksel dayanıklılığı artırır ve günlük yaşam kalitesini iyileştirir. Düzenli egzersiz, hastalığın ilerlemesini yavaşlatmaya yardımcı olur.',
+    soru: 'Gebelikte hangi egzersizler yapılabilir?',
+    cevap: 'Gebelikte yürüyüş, yüzme, prenatal yoga ve hafif germe egzersizleri güvenle yapılabilir. Haftada en az 150 dakika orta yoğunlukta fiziksel aktivite önerilir. Ağır kaldırma, sırt üstü uzanarak yapılan egzersizler ve temas sporlarından kaçınılmalıdır. Egzersize başlamadan önce mutlaka doktorunuza danışın.',
   },
   {
     id: 3,
-    soru: 'Günde kaç kez egzersiz yapmalıyım?',
-    cevap: 'Hekiminizin önerisi doğrultusunda günde en az 1-2 kez, her seansta 15-30 dakika egzersiz yapmanız önerilir. Egzersiz süresini ve yoğunluğunu zamanla kademeli olarak artırabilirsiniz.',
+    soru: 'Gebelikte nasıl beslenmeliyim?',
+    cevap: 'Gebelikte dengeli ve çeşitli beslenme çok önemlidir. Folik asit, demir, kalsiyum ve D vitamini ihtiyacı artar. Günde 3 ana öğün ve 2-3 ara öğün tüketilmeli, bol su içilmelidir. Çiğ et, çiğ süt ürünleri ve işlenmemiş yiyeceklerden kaçınılmalıdır.',
   },
   {
     id: 4,
-    soru: 'Egzersiz sırasında nefes darlığı hissedersem ne yapmalıyım?',
-    cevap: 'Egzersizi durdurun ve büzük dudak solunumu tekniğini uygulayın: Burnunuzdan yavaşça nefes alın, dudaklarınızı büzerek ağızdan yavaşça verin. Nefes darlığı geçene kadar dinlenin. Şiddetli nefes darlığında hekiminize başvurun.',
+    soru: 'Gebelikte ne kadar kilo almalıyım?',
+    cevap: 'Kilo alımı gebelik öncesi BMI değerine göre değişir. Normal kilolu kadınlarda (BMI 18.5-24.9) toplam 11-16 kg, fazla kilolularda (BMI 25-29.9) 7-11 kg, obez kadınlarda (BMI 30+) 5-9 kg kilo alımı önerilir. Ani ve aşırı kilo alımı preeklampsi gibi komplikasyonların habercisi olabilir.',
   },
   {
     id: 5,
-    soru: 'Kan şekeri takibi neden önemli?',
-    cevap: 'KOAH hastaları arasında diyabet riski yüksektir. Düzenli kan şekeri takibi, olası komplikasyonları erken tespit etmenizi ve tedavi planınızı buna göre ayarlamanızı sağlar.',
+    soru: 'Nefes egzersizleri gebelikte faydalı mıdır?',
+    cevap: 'Evet, nefes egzersizleri gebelikte çok faydalıdır. Stresi azaltır, uyku kalitesini artırır ve doğuma hazırlık sürecinde büyük rol oynar. Derin nefes alma, diyafram solunumu ve 4-7-8 tekniği gibi yöntemler günlük olarak uygulanabilir.',
   },
   {
     id: 6,
-    soru: 'Beslenme takibi neden gerekli?',
-    cevap: 'Doğru beslenme, KOAH yönetiminin önemli bir parçasıdır. Yeterli kalori ve protein alımı solunum kaslarının güçlenmesine, bağışıklık sisteminin desteklenmesine ve genel sağlığın korunmasına yardımcı olur.',
+    soru: 'Gebelikte hangi ilaçları kullanabilirim?',
+    cevap: 'Gebelikte ilaç kullanımı konusunda mutlaka doktorunuza danışmalısınız. Folik asit, demir ve prenatal vitaminler genellikle önerilir. Reçetesiz ağrı kesici, soğuk algınlığı ilaçları ve bitkisel ürünler bile doktor onayı olmadan kullanılmamalıdır.',
   },
   {
     id: 7,
-    soru: 'Uygulamadaki verileri nasıl paylaşabilirim?',
-    cevap: 'Formlar bölümünden girdiğiniz tüm veriler (kan şekeri, fiziksel aktivite, beslenme) kaydedilir. Kontrol muayenelerinizde bu verileri doktorunuzla paylaşabilirsiniz.',
+    soru: 'Doktora ne zaman acil başvurmalıyım?',
+    cevap: 'Vajinal kanama, şiddetli karın ağrısı, şiddetli baş ağrısı, görme bozuklukları, yüz/el/ayaklarda ani şişme, ateş (38°C üzeri), bebeğin hareketlerinde belirgin azalma veya su gelmesi durumlarında derhal doktorunuza veya acil servise başvurmalısınız.',
+  },
+  {
+    id: 8,
+    soru: 'Bu uygulamadaki verilerimi nasıl kullanabilirim?',
+    cevap: 'Uygulamada kaydettiğiniz kan şekeri, beslenme, fiziksel aktivite ve ilaç bilgilerini doktor kontrollerinizde paylaşabilirsiniz. Bu veriler doktorunuzun sizi daha iyi takip etmesine ve tedavi planını kişiselleştirmesine yardımcı olur.',
   },
 ];
 

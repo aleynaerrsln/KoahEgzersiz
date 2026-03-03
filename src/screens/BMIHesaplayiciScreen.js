@@ -449,7 +449,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.primary,
     textAlign: 'center',
-    backgroundColor: '#FFF5F5',
+    backgroundColor: '#FFF5E6',
     padding: 12,
     borderRadius: 8,
     marginBottom: 10,

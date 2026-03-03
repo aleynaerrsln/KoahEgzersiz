@@ -9,9 +9,12 @@ import {
   Platform,
   ScrollView,
   Alert,
+  Dimensions,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../constants/colors';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function GirisScreen({ navigation }) {
   const [kullaniciAdi, setKullaniciAdi] = useState('');
@@ -55,88 +58,85 @@ export default function GirisScreen({ navigation }) {
         contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Üst Kısım - Modern İllüstrasyon */}
-        <View style={styles.ustKisim}>
-          {/* Dekoratif daireler */}
-          <View style={styles.dekorDaire1} />
-          <View style={styles.dekorDaire2} />
-          <View style={styles.dekorDaire3} />
+        {/* Dekoratif arka plan */}
+        <View style={styles.bgCircle1} />
+        <View style={styles.bgCircle2} />
+        <View style={styles.bgCircle3} />
 
-          {/* Ana illüstrasyon */}
-          <View style={styles.illustrationContainer}>
-            <View style={styles.outerGlow} />
-            <View style={styles.middleGlow} />
-            <View style={styles.innerCircle}>
-              <Text style={styles.illustrationEmoji}>🤰</Text>
+        {/* Üst boşluk + ikon */}
+        <View style={styles.headerArea}>
+          <View style={styles.iconRingOuter}>
+            <View style={styles.iconRingInner}>
+              <Text style={styles.headerEmoji}>🫄</Text>
             </View>
           </View>
-
-          {/* Başlık */}
-          <Text style={styles.appTitle}>Sağlık Takip</Text>
-          <Text style={styles.appSubtitle}>Gebelik Sağlık Uygulaması</Text>
+          <Text style={styles.appName}>Gebelik Sağlık Takip</Text>
+          <Text style={styles.appDesc}>Sağlıklı Anne, Sağlıklı Bebek</Text>
         </View>
 
-        {/* Alt Kısım - Form */}
-        <View style={styles.formCard}>
-          <Text style={styles.girisBaslik}>Giriş Yap</Text>
-          <View style={styles.baslikCizgi} />
+        {/* Form alanı */}
+        <View style={styles.formArea}>
+          <Text style={styles.formTitle}>Hoş Geldiniz</Text>
+          <Text style={styles.formSubtitle}>Hesabınıza giriş yapın</Text>
 
           {/* Kullanıcı Adı */}
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIconContainer}>
-              <Text style={styles.inputIconText}>👤</Text>
-            </View>
-            <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>Kullanıcı Adı</Text>
-              <TextInput
-                style={styles.input}
-                value={kullaniciAdi}
-                onChangeText={setKullaniciAdi}
-                placeholder="Kullanıcı adınızı giriniz"
-                placeholderTextColor="#BBBBBB"
-                autoCapitalize="none"
-              />
-            </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputIcon}>👤</Text>
+            <TextInput
+              style={styles.input}
+              value={kullaniciAdi}
+              onChangeText={setKullaniciAdi}
+              placeholder="Kullanıcı Adı"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              autoCapitalize="none"
+            />
           </View>
 
           {/* Şifre */}
-          <View style={styles.inputContainer}>
-            <View style={styles.inputIconContainer}>
-              <Text style={styles.inputIconText}>🔒</Text>
-            </View>
-            <View style={styles.inputWrapper}>
-              <Text style={styles.inputLabel}>Şifre</Text>
-              <View style={styles.sifreRow}>
-                <TextInput
-                  style={[styles.input, { flex: 1 }]}
-                  value={sifre}
-                  onChangeText={setSifre}
-                  placeholder="Şifrenizi giriniz"
-                  placeholderTextColor="#BBBBBB"
-                  secureTextEntry={sifreGizli}
-                />
-                <TouchableOpacity
-                  style={styles.gozBtn}
-                  onPress={() => setSifreGizli(!sifreGizli)}
-                >
-                  <Text style={styles.gozIcon}>{sifreGizli ? '👁️' : '👁️‍🗨️'}</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+          <View style={styles.inputBox}>
+            <Text style={styles.inputIcon}>🔒</Text>
+            <TextInput
+              style={[styles.input, { flex: 1 }]}
+              value={sifre}
+              onChangeText={setSifre}
+              placeholder="Şifre"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              secureTextEntry={sifreGizli}
+            />
+            <TouchableOpacity
+              style={styles.gozBtn}
+              onPress={() => setSifreGizli(!sifreGizli)}
+            >
+              <Text style={styles.gozIcon}>{sifreGizli ? '👁️' : '👁️‍🗨️'}</Text>
+            </TouchableOpacity>
           </View>
 
           {/* Giriş Butonu */}
-          <TouchableOpacity style={styles.girisBtn} onPress={girisYap} activeOpacity={0.8}>
-            <Text style={styles.girisBtnText}>GİRİŞ</Text>
+          <TouchableOpacity style={styles.girisBtn} onPress={girisYap} activeOpacity={0.85}>
+            <Text style={styles.girisBtnText}>GİRİŞ YAP</Text>
           </TouchableOpacity>
 
-          {/* Kayıt Ol */}
-          <View style={styles.kayitRow}>
-            <Text style={styles.kayitText}>Hesabınız yok mu? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('KayitOl')}>
-              <Text style={styles.kayitLink}>Kayıt Ol</Text>
-            </TouchableOpacity>
+          {/* Ayırıcı */}
+          <View style={styles.dividerRow}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>veya</Text>
+            <View style={styles.dividerLine} />
           </View>
+
+          {/* Kayıt Ol */}
+          <TouchableOpacity
+            style={styles.kayitBtn}
+            onPress={() => navigation.navigate('KayitOl')}
+            activeOpacity={0.85}
+          >
+            <Text style={styles.kayitBtnText}>YENİ HESAP OLUŞTUR</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Alt yazı */}
+        <View style={styles.bottomArea}>
+          <View style={styles.bottomLine} />
+          <Text style={styles.bottomText}>Gebelik Sağlık Takip ve Egzersiz Uygulaması</Text>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -150,149 +150,113 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: 30,
   },
-  // Üst kısım
-  ustKisim: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 320,
-    paddingTop: 60,
-    paddingBottom: 20,
-  },
-  dekorDaire1: {
+  // Dekoratif arka plan daireleri
+  bgCircle1: {
     position: 'absolute',
-    top: 20,
-    right: -30,
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    top: -60,
+    right: -50,
+    width: 200,
+    height: 200,
+    borderRadius: 100,
     backgroundColor: 'rgba(255,255,255,0.06)',
   },
-  dekorDaire2: {
+  bgCircle2: {
     position: 'absolute',
-    top: 80,
-    left: -20,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    top: 200,
+    left: -70,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    backgroundColor: 'rgba(255,255,255,0.04)',
   },
-  dekorDaire3: {
+  bgCircle3: {
     position: 'absolute',
-    bottom: 40,
-    right: 30,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    bottom: 100,
+    right: -30,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
     backgroundColor: 'rgba(255,255,255,0.05)',
   },
-  illustrationContainer: {
+  // Üst ikon alanı
+  headerArea: {
+    alignItems: 'center',
+    paddingTop: 70,
+    paddingBottom: 30,
+  },
+  iconRingOuter: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: 'rgba(255,255,255,0.1)',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 180,
-    height: 180,
     marginBottom: 16,
   },
-  outerGlow: {
-    position: 'absolute',
-    width: 180,
-    height: 180,
-    borderRadius: 90,
-    backgroundColor: 'rgba(255,255,255,0.08)',
-  },
-  middleGlow: {
-    position: 'absolute',
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    backgroundColor: 'rgba(255,255,255,0.12)',
-  },
-  innerCircle: {
-    width: 110,
-    height: 110,
-    borderRadius: 55,
-    backgroundColor: 'rgba(255,255,255,0.18)',
+  iconRingInner: {
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.25)',
   },
-  illustrationEmoji: {
-    fontSize: 60,
+  headerEmoji: {
+    fontSize: 45,
   },
-  appTitle: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: colors.white,
-    letterSpacing: 1,
+  appName: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
-  appSubtitle: {
+  appDesc: {
     fontSize: 13,
     color: 'rgba(255,255,255,0.6)',
     marginTop: 4,
+    fontStyle: 'italic',
   },
-  // Form kartı
-  formCard: {
-    backgroundColor: colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 28,
-    paddingTop: 28,
-    paddingBottom: 36,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -6 },
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
+  // Form alanı
+  formArea: {
+    paddingHorizontal: 30,
+    paddingTop: 10,
   },
-  girisBaslik: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 6,
+  formTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    marginBottom: 4,
   },
-  baslikCizgi: {
-    width: 45,
-    height: 3,
-    backgroundColor: colors.primary,
-    borderRadius: 2,
+  formSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.6)',
     marginBottom: 28,
   },
-  inputContainer: {
+  // Input kutuları - saydam
+  inputBox: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 22,
-  },
-  inputIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#FFF0F0',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-    marginTop: 14,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: 14,
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
   },
-  inputIconText: {
+  inputIcon: {
     fontSize: 18,
-  },
-  inputWrapper: {
-    flex: 1,
-  },
-  inputLabel: {
-    fontSize: 12,
-    color: colors.gray,
-    marginBottom: 4,
-    fontWeight: '500',
+    marginRight: 12,
   },
   input: {
-    borderBottomWidth: 1.5,
-    borderBottomColor: '#EEEEEE',
+    flex: 1,
     fontSize: 16,
-    color: colors.text,
-    paddingVertical: 8,
-  },
-  sifreRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    color: '#FFFFFF',
+    paddingVertical: 14,
   },
   gozBtn: {
     padding: 8,
@@ -301,38 +265,73 @@ const styles = StyleSheet.create({
   gozIcon: {
     fontSize: 18,
   },
+  // Giriş butonu - krem/beyaz
   girisBtn: {
-    backgroundColor: colors.primary,
+    backgroundColor: '#FFFFFF',
     paddingVertical: 16,
     borderRadius: 14,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 8,
     elevation: 4,
-    shadowColor: colors.primary,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
   },
   girisBtnText: {
-    color: colors.white,
+    color: colors.primary,
     fontSize: 17,
     fontWeight: 'bold',
     letterSpacing: 2,
   },
-  kayitRow: {
+  // Ayırıcı
+  dividerRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginVertical: 22,
   },
-  kayitText: {
-    fontSize: 14,
-    color: colors.gray,
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'rgba(255,255,255,0.2)',
   },
-  kayitLink: {
-    fontSize: 14,
-    color: colors.primary,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline',
+  dividerText: {
+    color: 'rgba(255,255,255,0.5)',
+    fontSize: 13,
+    marginHorizontal: 14,
+  },
+  // Kayıt ol butonu - saydam
+  kayitBtn: {
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    paddingVertical: 16,
+    borderRadius: 14,
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: 'rgba(255,255,255,0.3)',
+  },
+  kayitBtnText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
+    letterSpacing: 1.5,
+  },
+  // Alt yazı
+  bottomArea: {
+    alignItems: 'center',
+    marginTop: 'auto',
+    paddingTop: 30,
+    paddingBottom: 10,
+  },
+  bottomLine: {
+    width: 40,
+    height: 2,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 1,
+    marginBottom: 10,
+  },
+  bottomText: {
+    fontSize: 11,
+    color: 'rgba(255,255,255,0.35)',
+    textAlign: 'center',
   },
 });
