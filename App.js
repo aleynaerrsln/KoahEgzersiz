@@ -18,6 +18,7 @@ import AnketScreen from './src/screens/AnketScreen';
 import IlacHatirlaticiScreen from './src/screens/IlacHatirlaticiScreen';
 import NefesEgzersiziScreen from './src/screens/NefesEgzersiziScreen';
 import BMIHesaplayiciScreen from './src/screens/BMIHesaplayiciScreen';
+import GirisScreen from './src/screens/GirisScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -88,16 +89,16 @@ function SplashScreen({ onFinish }) {
     <Animated.View style={[splashStyles.container, { opacity: fadeAnim }]}>
       <StatusBar style="light" />
       <Animated.View style={{ transform: [{ scale: Animated.multiply(scaleAnim, pulseAnim) }] }}>
-        <Text style={splashStyles.icon}>🫁</Text>
+        <Text style={splashStyles.icon}>🤰</Text>
       </Animated.View>
       <Animated.View style={{ transform: [{ translateY: slideAnim }], opacity: fadeAnim }}>
-        <Text style={splashStyles.title}>KOAH Egzersiz</Text>
-        <Text style={splashStyles.subtitle}>Sağlıklı Nefes, Sağlıklı Yaşam</Text>
+        <Text style={splashStyles.title}>Sağlık Takip</Text>
+        <Text style={splashStyles.subtitle}>Sağlıklı Anne, Sağlıklı Bebek</Text>
       </Animated.View>
       <Animated.View style={[splashStyles.bottomContainer, { opacity: fadeAnim }]}>
         <View style={splashStyles.line} />
-        <Text style={splashStyles.bottomText}>Kronik Obstrüktif Akciğer Hastalığı</Text>
-        <Text style={splashStyles.bottomText}>Egzersiz ve Takip Uygulaması</Text>
+        <Text style={splashStyles.bottomText}>Gebelik Sağlık Takip</Text>
+        <Text style={splashStyles.bottomText}>ve Egzersiz Uygulaması</Text>
       </Animated.View>
     </Animated.View>
   );
@@ -165,6 +166,11 @@ export default function App() {
           headerTitleAlign: 'center',
         }}
       >
+        <Stack.Screen
+          name="Giris"
+          component={GirisScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Anasayfa"
           component={AnasayfaScreen}

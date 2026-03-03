@@ -27,8 +27,11 @@ const besinListesi = [
 ];
 
 const ogunler = ['Sabah', 'Öğle', 'Akşam', 'Ara Öğün'];
+const haftalar = Array.from({ length: 40 }, (_, i) => i + 1);
 
 export default function BeslenmeEklemeScreen() {
+  const [gebelikHaftasi, setGebelikHaftasi] = useState(null);
+  const [haftaModal, setHaftaModal] = useState(false);
   const [secilenOgun, setSecilenOgun] = useState('Sabah');
   const [eklenenBesinler, setEklenenBesinler] = useState([]);
   const [besinModal, setBesinModal] = useState(false);
@@ -80,8 +83,17 @@ export default function BeslenmeEklemeScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollArea} contentContainerStyle={styles.content}>
+        {/* Gebelik Haftası Seçimi */}
+        <Text style={styles.label}>Gebelik Haftanızı Seçiniz:</Text>
+        <TouchableOpacity style={styles.dropdownBtn} onPress={() => setHaftaModal(true)}>
+          <Text style={styles.dropdownText}>
+            {gebelikHaftasi ? `${gebelikHaftasi}. Hafta` : 'Hafta seçiniz...'}
+          </Text>
+          <Text style={styles.dropdownOk}>▼</Text>
+        </TouchableOpacity>
+
         {/* Öğün Seçimi */}
-        <Text style={styles.label}>Öğünü Seçiniz:</Text>
+        <Text style={styles.label}>Öğünümü Seçiniz:</Text>
         <View style={styles.chipRow}>
           {ogunler.map((o) => (
             <TouchableOpacity
@@ -125,6 +137,28 @@ export default function BeslenmeEklemeScreen() {
           ))
         )}
       </ScrollView>
+
+      {/* Hafta Seçim Modalı */}
+      <Modal visible={haftaModal} animationType="fade" transparent>
+        <View style={styles.haftaModalOverlay}>
+          <View style={styles.haftaModalContent}>
+            <Text style={styles.haftaModalTitle}>Gebelik Haftası Seçiniz</Text>
+            <ScrollView style={styles.haftaListe}>
+              {haftalar.map((h) => (
+                <TouchableOpacity
+                  key={h}
+                  style={[styles.haftaItem, gebelikHaftasi === h && styles.haftaItemSecili]}
+                  onPress={() => { setGebelikHaftasi(h); setHaftaModal(false); }}
+                >
+                  <Text style={[styles.haftaItemText, gebelikHaftasi === h && styles.haftaItemTextSecili]}>
+                    {h}. Hafta
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
 
       {/* Besin Seçim Modalı */}
       <Modal visible={besinModal} animationType="slide" transparent>
@@ -408,5 +442,63 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  // Dropdown
+  dropdownBtn: {
+    backgroundColor: colors.white,
+    borderRadius: 8,
+    padding: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  dropdownText: {
+    fontSize: 15,
+    color: colors.text,
+  },
+  dropdownOk: {
+    fontSize: 12,
+    color: colors.gray,
+  },
+  // Hafta Modal
+  haftaModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  haftaModalContent: {
+    backgroundColor: colors.white,
+    borderRadius: 14,
+    padding: 20,
+    maxHeight: 400,
+  },
+  haftaModalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.primary,
+    textAlign: 'center',
+    marginBottom: 12,
+  },
+  haftaListe: {
+    maxHeight: 320,
+  },
+  haftaItem: {
+    padding: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.lightGray,
+    alignItems: 'center',
+  },
+  haftaItemSecili: {
+    backgroundColor: '#FFF0F0',
+  },
+  haftaItemText: {
+    fontSize: 16,
+    color: colors.text,
+  },
+  haftaItemTextSecili: {
+    color: colors.primary,
+    fontWeight: 'bold',
   },
 });

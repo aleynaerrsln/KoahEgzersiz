@@ -20,7 +20,9 @@ const menuItems = [
   { id: 'ilacHatirlatici', title: 'İlaç Hatırlatıcı', emoji: '💊', screen: 'IlacHatirlatici' },
 ];
 
-export default function AnasayfaScreen({ navigation }) {
+export default function AnasayfaScreen({ navigation, route }) {
+  const kullaniciAdi = route.params?.kullaniciAdi || 'Kullanıcı';
+
   const handlePress = (screen) => {
     try {
       navigation.navigate(screen);
@@ -34,7 +36,7 @@ export default function AnasayfaScreen({ navigation }) {
       <View style={styles.welcomeCard}>
         <Text style={styles.welcomeEmoji}>😊</Text>
         <Text style={styles.welcomeText}>
-          Sayın Kullanıcı,{'\n'}uygulamaya{'\n'}hoşgeldiniz.
+          Sayın {kullaniciAdi},{'\n'}uygulamaya{'\n'}hoşgeldiniz.
         </Text>
       </View>
 
