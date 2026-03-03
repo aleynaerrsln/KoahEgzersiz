@@ -1,5 +1,7 @@
 # SaglikTakip - Gebelikte Saglik Takip Uygulamasi
 
+**836021 numarali proje kapsaminda yapilmistir.**
+
 **Ogrenci:** Aleyna Erarslan
 **Okul Numarasi:** 231118098
 **Universite:** Samsun Universitesi
