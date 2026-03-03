@@ -22,7 +22,9 @@ Gebelik surecinde annelerin kan sekeri, kilo, beslenme ve fiziksel aktivite gibi
 
 ## APK Indirme
 
-[**Android APK Indir (v1.0.0)**](https://github.com/aleynaerrsln/SaglikTakip/releases/tag/v1.0.0)
+[**Android APK Indir - EAS Build (Onerilen)**](https://github.com/aleynaerrsln/SaglikTakip/releases/tag/v1.0.0)
+
+[**Android APK Indir - Android Studio (Debug)**](https://github.com/aleynaerrsln/SaglikTakip/releases/tag/v1.0.0-debug)
 
 > APK dosyasini telefonunuza indirdikten sonra "Bilinmeyen kaynaklardan yukleme" iznini vererek kurabilirsiniz.
 
