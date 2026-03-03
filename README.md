@@ -26,6 +26,10 @@ Gebelik surecinde annelerin kan sekeri, kilo, beslenme ve fiziksel aktivite gibi
 
 > APK dosyasini telefonunuza indirdikten sonra "Bilinmeyen kaynaklardan yukleme" iznini vererek kurabilirsiniz.
 
+## Demo Video
+
+[**Uygulama Tanitim Videosu (YouTube)**](https://youtube.com/shorts/I6ccyeAWyjk?si=3vtymYwezDu9mNP6)
+
 ## Uygulama Ozellikleri
 
 | Ozellik | Aciklama |
@@ -43,10 +47,6 @@ Gebelik surecinde annelerin kan sekeri, kilo, beslenme ve fiziksel aktivite gibi
 | SSS | Sikca sorulan sorular |
 | Anket | Saglik degerlendirme anketi |
 | Bildirimler | Uygulama bildirimleri |
-
-## Demo Video
-
-[**Uygulama Tanitim Videosu (YouTube)**](https://youtube.com/shorts/I6ccyeAWyjk?si=3vtymYwezDu9mNP6)
 
 ## Ekran Goruntuleri
 
