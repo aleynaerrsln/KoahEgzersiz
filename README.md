@@ -44,6 +44,10 @@ Gebelik surecinde annelerin kan sekeri, kilo, beslenme ve fiziksel aktivite gibi
 | Anket | Saglik degerlendirme anketi |
 | Bildirimler | Uygulama bildirimleri |
 
+## Demo Video
+
+[**Uygulama Tanitim Videosu (YouTube)**](https://youtube.com/shorts/I6ccyeAWyjk?si=3vtymYwezDu9mNP6)
+
 ## Ekran Goruntuleri
 
 Uygulama **Soft Rose** temasinda tasarlanmistir:
