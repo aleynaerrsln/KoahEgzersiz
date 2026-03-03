@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   Modal,
   Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../constants/colors';
 
 const saatSecenekleri = [
@@ -17,12 +18,24 @@ const saatSecenekleri = [
   '20:00', '21:00', '22:00', '23:00',
 ];
 
+const defaultIlaclar = [
+  { id: 1, ad: 'Ventolin İnhaler', doz: '2 puf', saat: '08:00', gunler: 'Her gün', alindi: false },
+  { id: 2, ad: 'Spiriva', doz: '1 kapsül', saat: '09:00', gunler: 'Her gün', alindi: true },
+  { id: 3, ad: 'Metformin', doz: '500 mg', saat: '13:00', gunler: 'Her gün', alindi: false },
+];
+
 export default function IlacHatirlaticiScreen() {
-  const [ilaclar, setIlaclar] = useState([
-    { id: 1, ad: 'Ventolin İnhaler', doz: '2 puf', saat: '08:00', gunler: 'Her gün', alindi: false },
-    { id: 2, ad: 'Spiriva', doz: '1 kapsül', saat: '09:00', gunler: 'Her gün', alindi: true },
-    { id: 3, ad: 'Metformin', doz: '500 mg', saat: '13:00', gunler: 'Her gün', alindi: false },
-  ]);
+  const [ilaclar, setIlaclar] = useState(defaultIlaclar);
+
+  useEffect(() => {
+    AsyncStorage.getItem('ilaclar').then((saved) => {
+      if (saved) setIlaclar(JSON.parse(saved));
+    });
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('ilaclar', JSON.stringify(ilaclar));
+  }, [ilaclar]);
 
   const [eklemeModal, setEklemeModal] = useState(false);
   const [saatModal, setSaatModal] = useState(false);

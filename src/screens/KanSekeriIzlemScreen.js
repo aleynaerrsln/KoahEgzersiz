@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,23 +11,36 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../constants/colors';
 
 const UYARI_MESAJI =
   'Lütfen 4-5 kesme şeker veya 150-200 ml meyve suyu alınız. Ardından ek bir ara öğün alınız. 15 dakika sonra kan şekerinize bakınız. Normal sınırlara dönene kadar tekrarlayınız ve diyabet eğitimcinizden danışmanlık alınız.';
 
+const defaultKayitlar = [
+  {
+    id: 1,
+    ogunu: 'Sabah',
+    aclikDurumu: 'Açlık',
+    tarih: '05-03-2023',
+    saat: '16:58:00',
+    kanSekeri: 60,
+    insulinDozu: '',
+  },
+];
+
 export default function KanSekeriIzlemScreen() {
-  const [kayitlar, setKayitlar] = useState([
-    {
-      id: 1,
-      ogunu: 'Sabah',
-      aclikDurumu: 'Açlık',
-      tarih: '05-03-2023',
-      saat: '16:58:00',
-      kanSekeri: 60,
-      insulinDozu: '',
-    },
-  ]);
+  const [kayitlar, setKayitlar] = useState(defaultKayitlar);
+
+  useEffect(() => {
+    AsyncStorage.getItem('kanSekeriKayitlari').then((saved) => {
+      if (saved) setKayitlar(JSON.parse(saved));
+    });
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('kanSekeriKayitlari', JSON.stringify(kayitlar));
+  }, [kayitlar]);
 
   const [eklemeModal, setEklemeModal] = useState(false);
   const [uyariModal, setUyariModal] = useState(false);

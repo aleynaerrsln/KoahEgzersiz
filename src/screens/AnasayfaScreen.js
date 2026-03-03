@@ -12,6 +12,8 @@ const menuItems = [
   { id: 'formlar', title: 'Formlar', emoji: '📋', screen: 'Formlar' },
   { id: 'egitimler', title: 'Eğitimler', emoji: '🩺', screen: 'Egitimler' },
   { id: 'gunlukHedefler', title: 'Günlük Hedefler', emoji: '🥗', screen: 'GunlukHedefler', fullWidth: true },
+  { id: 'nefesEgzersizi', title: 'Nefes Egzersizi', emoji: '🌬️', screen: 'NefesEgzersizi' },
+  { id: 'bmiHesaplayici', title: 'BMI Hesaplayıcı', emoji: '⚖️', screen: 'BMIHesaplayici' },
   { id: 'sss', title: 'SSS', emoji: '❓', screen: 'SSS' },
   { id: 'bildirimler', title: 'Bildirimler', emoji: '🔔', screen: 'Bildirimler' },
   { id: 'anket', title: 'Anket', emoji: '🏃', screen: 'Anket' },

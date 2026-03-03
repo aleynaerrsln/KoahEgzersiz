@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,25 +11,38 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../constants/colors';
 
+const defaultAktiviteler = [
+  {
+    id: 1,
+    tur: 'yürüyüş',
+    sure: '30',
+    durum: 'Yapıldı',
+    tarihSaat: '23-08-2022 08:25',
+  },
+  {
+    id: 2,
+    tur: 'yürüyüş',
+    sure: '20',
+    durum: 'Yapıldı',
+    tarihSaat: '05-03-2023 14:17',
+  },
+];
+
 export default function FizikselAktivitelerimScreen() {
-  const [aktiviteler, setAktiviteler] = useState([
-    {
-      id: 1,
-      tur: 'yürüyüş',
-      sure: '30',
-      durum: 'Yapıldı',
-      tarihSaat: '23-08-2022 08:25',
-    },
-    {
-      id: 2,
-      tur: 'yürüyüş',
-      sure: '20',
-      durum: 'Yapıldı',
-      tarihSaat: '05-03-2023 14:17',
-    },
-  ]);
+  const [aktiviteler, setAktiviteler] = useState(defaultAktiviteler);
+
+  useEffect(() => {
+    AsyncStorage.getItem('aktiviteler').then((saved) => {
+      if (saved) setAktiviteler(JSON.parse(saved));
+    });
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem('aktiviteler', JSON.stringify(aktiviteler));
+  }, [aktiviteler]);
 
   const [eklemeModal, setEklemeModal] = useState(false);
   const [yeniAktivite, setYeniAktivite] = useState({
