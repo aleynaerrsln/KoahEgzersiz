@@ -73,7 +73,7 @@ Uygulama **Soft Rose** temasinda tasarlanmistir:
    npm install
    ```
 
-3. **Uygulamayi baslatim:**
+3. **Uygulamayi baslatin:**
    ```bash
    npx expo start
    ```
